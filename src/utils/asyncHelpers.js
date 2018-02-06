@@ -37,7 +37,7 @@ const createAsyncReducer = asyncType => ({
   [toSuccess(asyncType)]: (state, { payload }) => ({
     ...state,
     loading: false,
-    data: payload,
+    data: payload.result || payload,
   }),
   [toFail(asyncType)]: (state, { payload }) => ({
     ...state,
@@ -64,12 +64,19 @@ const createAsyncNormalizeSelector = (schema, selector) => {
       }
 
       const data = isSchemaArray
-        ? dataListOrId.map(id => allList.get(id.toString()))
-        : _.get(allList, dataListOrId.toString());
+        ? dataListOrId.map(id => {
+          return allEntities[id];
+        })
+        : _.get(allEntities, dataListOrId.toString());
 
-      return schema ? denormalize(data, schema, allEntities) : data;
+      return schema ? denormalize(data, schema, allList) : data;
     }
   );
 };
 
-export { createAsyncAction, initialAsyncState, createAsyncReducer };
+export {
+  createAsyncAction,
+  initialAsyncState,
+  createAsyncReducer,
+  createAsyncNormalizeSelector,
+};

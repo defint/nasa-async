@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actionCreators/nasaActionCreators';
+import { createAsyncNormalizeSelector } from '../utils/asyncHelpers';
+import photoSchema from '../schemas/photo';
 
 class NormalizrDemo extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.nasaFetchCuriosity();
   }
 
@@ -15,16 +17,28 @@ class NormalizrDemo extends Component {
     }
 
     return (
-      <div>
-        123
-      </div>
+      <ul>
+        {curiosity.map(item => (
+          <li key={item.id}>
+            <span>{item.earth_date}</span>
+            <div>
+              <img src={item.img_src} alt="" width={200} />
+            </div>
+          </li>
+        ))}
+      </ul>
     );
   }
 }
 
+const getCuriosityPhotos = createAsyncNormalizeSelector(
+  [photoSchema],
+  state => state.curiosity
+);
+
 const mapStateToProps = state => ({
   loading: state.curiosity.loading,
-  curiosity: state.curiosity.data,
+  curiosity: getCuriosityPhotos(state),
 });
 
 const mapDispatchToProps = {
