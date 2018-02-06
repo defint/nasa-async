@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from './actionCreators/nasaActionCreators';
+import * as actionCreators from '../actionCreators/nasaActionCreators';
 
 class App extends Component {
   componentWillMount() {
@@ -24,8 +24,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.loading,
-  planet: state.data,
+  loading: state.nasa.loading,
+  planet: state.nasa.data,
 });
 
 const mapDispatchToProps = {

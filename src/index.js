@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import nasaReducer from './reducers/nasaReducer';
-import App from './App';
+import * as reducers from './reducers';
+import App from './containers/App';
 import registerServiceWorker from './registerServiceWorker';
 
 export const storeFactory = reducer => {
   const middlewares = [thunk];
 
   const enhancers = [applyMiddleware(...middlewares)];
-  
+
   const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&
     typeof window === 'object' &&
@@ -23,7 +23,7 @@ export const storeFactory = reducer => {
 };
 
 ReactDOM.render(
-  <Provider store={storeFactory(nasaReducer)}>
+  <Provider store={storeFactory(combineReducers(reducers))}>
     <App />
   </Provider>,
   document.getElementById('root')
