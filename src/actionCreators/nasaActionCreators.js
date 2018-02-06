@@ -1,8 +1,13 @@
-import { fetchPlanet } from '../endpoints/nasa';
 import { createAsyncAction } from '../utils/asyncHelpers';
-import { NASA_DATA_FETCH } from '../actionTypes/nasaActionType';
+import { fetchPlanet, fetchCuriosityPhotos } from '../endpoints/nasa';
+import { NASA_DATA_FETCH, NASA_CURIOSITY_FETCH } from '../actionTypes/nasaActionType';
 
 export const nasaFetchPlanet = createAsyncAction(
   NASA_DATA_FETCH,
   fetchPlanet
+);
+
+export const nasaFetchCuriosity = createAsyncAction(
+  NASA_CURIOSITY_FETCH,
+  fetchCuriosityPhotos
 );

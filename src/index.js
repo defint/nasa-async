@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
-import App from './containers/App';
+import NormalizrDemo from './containers/NormalizrDemo';
 import registerServiceWorker from './registerServiceWorker';
 
 export const storeFactory = reducer => {
@@ -24,7 +24,7 @@ export const storeFactory = reducer => {
 
 ReactDOM.render(
   <Provider store={storeFactory(combineReducers(reducers))}>
-    <App />
+    <NormalizrDemo />
   </Provider>,
   document.getElementById('root')
 );
