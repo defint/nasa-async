@@ -46,33 +46,16 @@ const createAsyncReducer = asyncType => ({
   }),
 });
 
-const createAsyncNormalizeSelector = (schema, selector) => {
-  const isSchemaArray = _.isArray(schema);
-  const schemaSingle = isSchemaArray ? schema[0] : schema;
+const createAsyncNormalizeSelector = (schema, selector) =>
+  createSelector([selector, state => state.entities], (listOrId, allList) => {
+    const dataListOrId = _.get(listOrId, 'data');
 
-  return createSelector(
-    [
-      selector,
-      state => state.entities,
-      state => state.entities[schemaSingle.key],
-    ],
-    (listOrId, allList, allEntities) => {
-      const dataListOrId = _.get(listOrId, 'data');
-
-      if (_.isEmpty(dataListOrId)) {
-        return isSchemaArray ? [] : {};
-      }
-
-      const data = isSchemaArray
-        ? dataListOrId.map(id => {
-          return allEntities[id];
-        })
-        : _.get(allEntities, dataListOrId.toString());
-
-      return schema ? denormalize(data, schema, allList) : data;
+    if (_.isEmpty(dataListOrId)) {
+      return _.isArray(schema) ? [] : {};
     }
-  );
-};
+
+    return schema ? denormalize(dataListOrId, schema, allList) : dataListOrId;
+  });
 
 export {
   createAsyncAction,
