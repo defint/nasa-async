@@ -1,5 +1,4 @@
 import { createAction } from 'redux-actions';
-import _ from 'lodash';
 import { denormalize } from 'normalizr';
 import { createSelector } from 'reselect';
 
@@ -7,7 +6,9 @@ const toSuccess = asyncType => `${asyncType}_SUCCESS`;
 const toFail = asyncType => `${asyncType}_FAIL`;
 const toRequest = asyncType => `${asyncType}_REQUEST`;
 
-const createAsyncAction = (asyncType, request, after = _.identity) => (
+const identity = o => o;
+
+const createAsyncAction = (asyncType, request, after = identity) => (
   ...args
 ) => {
   const pendingType = createAction(toRequest(asyncType));
@@ -48,14 +49,26 @@ const createAsyncReducer = asyncType => ({
 
 const createAsyncNormalizeSelector = (schema, selector) =>
   createSelector([selector, state => state.entities], (listOrId, allList) => {
-    const dataListOrId = _.get(listOrId, 'data');
+    const { data } = listOrId;
 
-    if (_.isEmpty(dataListOrId)) {
-      return _.isArray(schema) ? [] : {};
+    if (!data) {
+      return Array.isArray(schema) ? [] : {};
     }
 
-    return schema ? denormalize(dataListOrId, schema, allList) : dataListOrId;
+    return schema ? denormalize(data, schema, allList) : data;
   });
+
+// const createAsyncNormalizeSelector = (schema, selector) => state => {
+//   const listOrId = selector(state);
+//   const allList = (state => state.entities)(state);
+//   const { data } = listOrId;
+//
+//   if (!data) {
+//     return Array.isArray(schema) ? [] : {};
+//   }
+//
+//   return schema ? denormalize(data, schema, allList) : data;
+// };
 
 export {
   createAsyncAction,

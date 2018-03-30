@@ -10,6 +10,6 @@ export const fetchPlanet = () =>
 export const fetchCuriosityPhotos = () =>
   axios.request({
     url:
-      'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=DEMO_KEY',
+      'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=fhaz&api_key=NwlYGbD0VD2zet3MRCZkRYLJ6b6DwDlqZZFs6EUQ',
     method: 'get',
   });

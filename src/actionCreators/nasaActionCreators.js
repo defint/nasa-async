@@ -1,16 +1,19 @@
-import {normalize} from 'normalizr';
+import { normalize } from 'normalizr';
+import { createAction } from 'redux-actions';
 import { createAsyncAction } from '../utils/asyncHelpers';
 import { fetchPlanet, fetchCuriosityPhotos } from '../endpoints/nasa';
-import { NASA_DATA_FETCH, NASA_CURIOSITY_FETCH } from '../actionTypes/nasaActionType';
+import {
+  NASA_DATA_FETCH,
+  NASA_CURIOSITY_FETCH,
+} from '../actionTypes/nasaActionType';
 import photo from '../schemas/photo';
 
-export const nasaFetchPlanet = createAsyncAction(
-  NASA_DATA_FETCH,
-  fetchPlanet
-);
+export const nasaFetchPlanet = createAsyncAction(NASA_DATA_FETCH, fetchPlanet);
 
 export const nasaFetchCuriosity = createAsyncAction(
   NASA_CURIOSITY_FETCH,
   fetchCuriosityPhotos,
   data => normalize(data.photos, [photo])
 );
+
+export const changeStore = createAction('CHANGE_COUNTER');

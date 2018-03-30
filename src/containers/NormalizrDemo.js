@@ -10,23 +10,28 @@ class NormalizrDemo extends Component {
   }
 
   render() {
-    const { loading, curiosity } = this.props;
+    const { loading, curiosity, changeStore } = this.props;
 
-    if (loading || !curiosity) {
+    if (loading || !curiosity.length) {
       return <span>Loading...</span>;
     }
 
+    console.log('!!!render!!!');
+
     return (
-      <ul>
-        {curiosity.map(item => (
-          <li key={item.id}>
-            <span>{item.earth_date}</span>
-            <div>
-              <img src={item.img_src} alt="" width={200} />
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <ul>
+          {curiosity.map(item => (
+            <li key={item.id}>
+              <span>{item.earth_date}</span>
+              <div>
+                <img src={item.img_src} alt="" width={200} />
+              </div>
+            </li>
+          ))}
+        </ul>
+        <button onClick={() => changeStore()}>Click</button>
+      </div>
     );
   }
 }
@@ -43,6 +48,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   nasaFetchCuriosity: actionCreators.nasaFetchCuriosity,
+  changeStore: actionCreators.changeStore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NormalizrDemo);
