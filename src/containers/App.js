@@ -24,8 +24,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.nasa.loading,
-  planet: state.nasa.data,
+  loading: state.nasa.aa.loading,
+  planet: state.nasa.aa.data,
 });
 
 const mapDispatchToProps = {

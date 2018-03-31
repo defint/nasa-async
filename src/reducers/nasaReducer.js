@@ -1,8 +1,8 @@
-import { handleActions } from 'redux-actions';
-import { createAsyncReducer, initialAsyncState } from 'redux-actions-async';
+import { handleAsyncActions } from 'redux-actions-async';
 import { NASA_DATA_FETCH } from '../actionTypes/nasaActionType';
+import { combineReducers } from 'redux';
 
-export default handleActions(
-  createAsyncReducer(NASA_DATA_FETCH),
-  initialAsyncState
-);
+export default combineReducers({
+  aa: handleAsyncActions(NASA_DATA_FETCH),
+  bb: handleAsyncActions(NASA_DATA_FETCH),
+});
