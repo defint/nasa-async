@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actionCreators/nasaActionCreators';
-import { createAsyncNormalizeSelector } from '../utils/asyncHelpers';
+import { createAsyncNormalizeSelector } from 'redux-actions-async';
 import photoSchema from '../schemas/photo';
 
 class NormalizrDemo extends Component {

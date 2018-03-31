@@ -1,6 +1,6 @@
 import { normalize } from 'normalizr';
 import { createAction } from 'redux-actions';
-import { createAsyncAction } from '../utils/asyncHelpers';
+import { createAsyncAction } from 'redux-actions-async';
 import { fetchPlanet, fetchCuriosityPhotos } from '../endpoints/nasa';
 import {
   NASA_DATA_FETCH,
