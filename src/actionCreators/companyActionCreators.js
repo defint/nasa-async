@@ -2,15 +2,14 @@ import { createAsyncAction } from 'redux-actions-async';
 import { normalize } from 'normalizr';
 import company from '../schemas/company';
 import {
-  COMPANY_ADD,
-  COMPANY_DELETE,
-  COMPANY_FETCH,
-} from '../actionTypes/companyActionType';
-import {
   addCompany,
   deleteCompany,
   fetchCompanies,
 } from '../endpoints/company';
+
+export const COMPANY_FETCH = 'COMPANY_FETCH';
+export const COMPANY_ADD = 'COMPANY_ADD';
+export const COMPANY_DELETE = 'COMPANY_DELETE';
 
 export const fetchCompaniesAsync = createAsyncAction(
   COMPANY_FETCH,

@@ -4,7 +4,7 @@ import {
   COMPANY_DELETE,
   COMPANY_ADD,
   COMPANY_FETCH,
-} from '../actionTypes/companyActionType';
+} from '../actionCreators/companyActionCreators';
 
 export default combineReducers({
   add: handleAsyncActions(COMPANY_ADD),
