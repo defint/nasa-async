@@ -8,7 +8,6 @@ class AsyncContainer extends Component {
     render: PropTypes.func.isRequired,
     asyncAction: PropTypes.func.isRequired,
     selector: PropTypes.func.isRequired,
-    Loading: PropTypes.object,
     schema: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 
@@ -17,13 +16,9 @@ class AsyncContainer extends Component {
   }
 
   render() {
-    const { loading, data, render, Loading } = this.props;
+    const { render, ...rest } = this.props;
 
-    if (loading || !data) {
-      return Loading || null;
-    }
-
-    return render(data);
+    return render(rest);
   }
 }
 
@@ -45,10 +40,23 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  asyncAction: () => {
-    dispatch(ownProps.asyncAction());
-  },
-});
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const methods = {
+    asyncAction: () => {
+      dispatch(ownProps.asyncAction());
+    },
+  };
+
+  if (ownProps.controls) {
+    const keys = Object.keys(ownProps.controls);
+    keys.forEach(item => {
+      methods[item] = () => {
+        dispatch(ownProps.controls[item]());
+      };
+    });
+  }
+
+  return methods;
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AsyncContainer);
