@@ -1,35 +1,23 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import * as actionCreators from '../actionCreators/nasaActionCreators';
+import AsyncContainer from '../AsyncContainer';
 
 class App extends Component {
-  componentWillMount() {
-    this.props.nasaFetchPlanet();
-  }
-
   render() {
-    const { loading, planet } = this.props;
-
-    if (loading || !planet) {
-      return <span>Loading...</span>;
-    }
-
     return (
-      <div>
-        <h1>{planet.title}</h1>
-        <img alt="" src={planet.url} width="500" />
-      </div>
+      <AsyncContainer
+        asyncAction={actionCreators.nasaFetchPlanet}
+        renderLoading={<span>Loading...</span>}
+        render={data => (
+          <div>
+            <h1>{data.title}</h1>
+            <img alt="" src={data.url} width="500" />
+          </div>
+        )}
+        selector={state => state.nasa.aa}
+      />
     );
   }
 }
 
-const mapStateToProps = state => ({
-  loading: state.nasa.aa.loading,
-  planet: state.nasa.aa.data,
-});
-
-const mapDispatchToProps = {
-  nasaFetchPlanet: actionCreators.nasaFetchPlanet,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
