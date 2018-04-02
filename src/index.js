@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import * as reducers from './reducers';
-import NormalizrDemo from './containers/NormalizrDemo';
+import NormalizrDemo from './containers/CompanyPage';
 import registerServiceWorker from './registerServiceWorker';
 
 export const storeFactory = reducer => {

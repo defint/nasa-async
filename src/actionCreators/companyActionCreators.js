@@ -18,9 +18,18 @@ export const fetchCompaniesAsync = createAsyncAction(
   data => normalize(data, [company])
 );
 
-export const addCompanyAsync = createAsyncAction(COMPANY_ADD, addCompany);
+export const addCompanyAsync = createAsyncAction(
+  COMPANY_ADD,
+  addCompany,
+  (data, dispatch) => {
+    dispatch(fetchCompaniesAsync());
+  }
+);
 
 export const deleteCompanyAsync = createAsyncAction(
   COMPANY_DELETE,
-  deleteCompany
+  deleteCompany,
+  (data, dispatch) => {
+    dispatch(fetchCompaniesAsync());
+  }
 );

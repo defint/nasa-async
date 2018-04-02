@@ -23,7 +23,9 @@ export const deleteCompany = id =>
 
       companyStore.splice(index, 1);
 
-      resolve(index);
+      resolve({
+        index: 0,
+      });
     }, 1000);
   });
 

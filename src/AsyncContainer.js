@@ -8,7 +8,7 @@ class AsyncContainer extends Component {
     render: PropTypes.func.isRequired,
     asyncAction: PropTypes.func.isRequired,
     selector: PropTypes.func.isRequired,
-    loadingComponent: PropTypes.object,
+    Loading: PropTypes.object,
     schema: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 
@@ -17,13 +17,10 @@ class AsyncContainer extends Component {
   }
 
   render() {
-    const { loading, data, render, loadingComponent } = this.props;
+    const { loading, data, render, Loading } = this.props;
 
     if (loading || !data) {
-      if (loadingComponent) {
-        return <loadingComponent />;
-      }
-      return null;
+      return Loading || null;
     }
 
     return render(data);
