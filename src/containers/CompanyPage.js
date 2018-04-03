@@ -1,50 +1,48 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import * as actionCreators from '../actionCreators/companyActionCreators';
-import companySchema from '../schemas/company';
-import AsyncContainer from '../AsyncContainer';
-
-const PureComponent = ({
-  data,
-  addCompanyAsync,
-  deleteCompanyAsync,
-  loading,
-}) => (
-  <React.Fragment>
-    {loading && <span>Loading...</span>}
-    {!loading &&
-      data && (
-        <div>
-          <ul>
-            {data.map(item => (
-              <li key={item.id}>
-                <span>{item.name}</span>
-                <button onClick={() => deleteCompanyAsync(item.id)}>
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
-          <button onClick={addCompanyAsync}>Add</button>
-        </div>
-      )}
-  </React.Fragment>
-);
+import { dataSelector, loadingSelector } from '../reducers/companyReducer';
 
 class CompanyPage extends Component {
+  componentDidMount = () => {
+    this.props.fetchCompaniesAsync();
+  };
+
   render() {
+    const { data, loading, addCompanyAsync, deleteCompanyAsync } = this.props;
+
+    if (loading) {
+      return <div>loading...</div>;
+    }
+
     return (
-      <AsyncContainer
-        asyncAction={actionCreators.fetchCompaniesAsync}
-        controls={{
-          addCompanyAsync: actionCreators.addCompanyAsync,
-          deleteCompanyAsync: actionCreators.deleteCompanyAsync,
-        }}
-        render={PureComponent}
-        selector={state => state.company.fetch}
-        schema={[companySchema]}
-      />
+      <div>
+        <ul>
+          {data.map(item => (
+            <li key={item.id}>
+              <span>{item.name}</span>
+              {'  '}
+              <button onClick={() => deleteCompanyAsync(item.id)}>
+                Remove
+              </button>
+            </li>
+          ))}
+        </ul>
+        <button onClick={addCompanyAsync}>Add</button>
+      </div>
     );
   }
 }
 
-export default CompanyPage;
+const mapStateToProps = state => ({
+  loading: loadingSelector(state),
+  data: dataSelector(state),
+});
+
+const mapDispatchToProps = {
+  addCompanyAsync: actionCreators.addCompanyAsync,
+  deleteCompanyAsync: actionCreators.deleteCompanyAsync,
+  fetchCompaniesAsync: actionCreators.fetchCompaniesAsync,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompanyPage);

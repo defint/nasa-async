@@ -5338,9 +5338,9 @@ reduce-reducers@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.2.tgz#fa1b4718bc5292a71ddd1e5d839c9bea9770f14b"
 
-redux-actions-async@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/redux-actions-async/-/redux-actions-async-0.2.0.tgz#c534961f3ff2728a216ca2d319839c8fb903ad4f"
+redux-actions-async@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/redux-actions-async/-/redux-actions-async-0.3.0.tgz#460f00e9a23dc304df61ff156899002a4f04f077"
   dependencies:
     normalizr "^3.2.4"
     redux-actions "^2.3.0"
